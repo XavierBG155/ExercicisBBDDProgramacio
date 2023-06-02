@@ -18,14 +18,13 @@ public class exercici1 {
         scanner.nextLine();
         try {
             if (opcio == 1) {
-                System.out.println("Quina matrícula?");
-                String matricula = scanner.nextLine();
-                System.out.println("Data de matriculació? (Format: AAAA/MM/DD)");
-                String data = scanner.nextLine();
-                insert(matricula, data);
+                insert();
             }
             if (opcio == 2) {
                 select();
+            }
+            if (opcio == 3){
+                update();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -50,8 +49,12 @@ public class exercici1 {
         return con;
     }
 
-    public static void insert(String matricula, String data) throws SQLException {
+    public static void insert() throws SQLException {
         Connection con = connexio();
+        System.out.println("Quina matrícula?");
+        String matricula = scanner.nextLine();
+        System.out.println("Data de matriculació? (Format: AAAA/MM/DD)");
+        String data = scanner.nextLine();
         String sql = "INSERT INTO cotxe (matricula, any_matriculacio) VALUES ('"
                 + matricula + "','" + data + "');";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -71,12 +74,15 @@ public class exercici1 {
         con.close();
     }
 
-    public static void update(String atribut) throws SQLException {
+    public static void update() throws SQLException {
         Connection con = connexio();
-        String canvi;
-        canvi = scanner.nextLine();
+        System.out.println("Que vols canviar?");
+        String atribut = scanner.nextLine();
+        System.out.println("Amb quin valor?");
+        String canvi = scanner.nextLine();
+        System.out.println("Valor a canviar?");
+        String canviat = scanner.nextLine();
         String sql = "UPDATE cotxe SET" + atribut + "=" + canvi + "WHERE" + atribut + "=" + canviat + ";";
-        ";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.execute();
         ps.close();
